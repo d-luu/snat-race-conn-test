@@ -97,6 +97,16 @@ spec:
       labels:
         app: snat-race-conn-test
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nginx-test
       containers:
         - name: snat-race-conn-test
           image: aloha2you/snat-race-conn-test
