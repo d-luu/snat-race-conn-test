@@ -59,13 +59,13 @@ spec:
               value: "http://nginx-test:80"
             # Number of parallel requests (default: 25)
             - name: CONCURRENCY
-              value: "25"
+              value: "50"
             # Interval between two requests, in ms (default: 100000)
             - name: INTERVAL
-              value: "100000"
+              value: "50000"
             # Timeout for requests, in ms (default: 500)
             - name: TIMEOUT
               value: "500"
             # Interval between two stats prints, in seconds (default: 30)
             - name: PRINTINTERVAL
-              value: "30"
+              value: "20"
