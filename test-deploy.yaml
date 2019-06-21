@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-test
+  labels:
+    app: nginx-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-test
+  template:
+    metadata:
+      labels:
+        app: nginx-test
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.7.9
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-test
+spec:
+  selector:
+    app: nginx-test
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snat-race-conn-test
+  labels:
+    app: snat-race-conn-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snat-race-conn-test
+  template:
+    metadata:
+      labels:
+        app: snat-race-conn-test
+    spec:
+      containers:
+        - name: snat-race-conn-test
+          image: aloha2you/snat-race-conn-test
+          env:
+            # URL to connect to
+            - name: URL
+              value: "http://nginx-test:80"
+            # Number of parallel requests (default: 25)
+            - name: CONCURRENCY
+              value: "25"
+            # Interval between two requests, in ms (default: 100000)
+            - name: INTERVAL
+              value: "100000"
+            # Timeout for requests, in ms (default: 500)
+            - name: TIMEOUT
+              value: "500"
+            # Interval between two stats prints, in seconds (default: 30)
+            - name: PRINTINTERVAL
+              value: "30"

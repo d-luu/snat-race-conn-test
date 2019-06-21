@@ -7,6 +7,11 @@ https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes
 
 #### Building
 ```bash
-$ dep ensure
 $ go build
+```
+
+#### Deploying to Kubernetes cluster
+
+```
+kubectl apply -f https://raw.githubusercontent.com/d-luu/snat-race-conn-test/docker/test-deploy.yaml 
 ```
